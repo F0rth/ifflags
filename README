@@ -1,0 +1,14 @@
+ifflags -- network InterFace FLAGS hacking
+can get / set flags and try to explain their meanings
+work only on OpenBSD for the moment
+send you patchs !
+
+ifflags without argument : display help
+
+ifflags interface_name : display interface status
+
+ifflags interface_name flags : set interface with the given flags
+
+How are flags are in the memory ?
+Basically it's a bunch of bits that are either 0 or 1
+for an easier (ie more compact reading) they are showed in hexa. 
