@@ -18,12 +18,23 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <string.h>
+#include <limits.h>
+#include <stdlib.h>
 
-
+/* Global variables */
 int sock;
 struct ifreq ifr;
 char *interface;
-long mode;
+unsigned int mode;
+
+/* Prototypes functions */
+int Decode_flags();
+int Set_mode();
+int Open_if();
+int Open_Raw_Socket();
+
+/* Let's begin ! */
 
 int main(int argc, char *argv[]) {
 	char *all_flags;
@@ -63,6 +74,7 @@ int main(int argc, char *argv[]) {
 		printf("flags values in hexa:\n\n");
 		Decode_flags();
 	}
+	return(0);
 }
 
 int Open_Raw_Socket() {
