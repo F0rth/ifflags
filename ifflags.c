@@ -29,10 +29,10 @@ char *interface;
 unsigned int mode;
 
 /* Prototypes functions */
-int Decode_flags();
-int Set_mode();
-int Open_if();
-int Open_Raw_Socket();
+int Decode_flags(void);
+int Set_mode(void);
+int Open_if(void);
+int Open_Raw_Socket(void);
 
 /* Let's begin ! */
 
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 		interface = argv[1];
 		strlcpy(ifr.ifr_name, interface,strlen(interface)+1);	
 		Open_Raw_Socket();
-		Open_if(sock, ifr);
+		Open_if();
 		printf("%s is currently set to: %x\n", interface, ifr.ifr_flags);
 		Decode_flags();
 		break;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 		mode = strtol(argv[2],  NULL, 16 );
 		
 		Open_Raw_Socket();
-		Open_if(sock, ifr);
+		Open_if();
 		printf("%s is currently set to: %x\n", interface, ifr.ifr_flags);
 		Decode_flags();
 		printf("\n");
@@ -113,7 +113,7 @@ int Set_mode() {
  }
 
 int Decode_flags(){
-	
+int i;
 struct if_mode {
 	int flag;
 	char *comment;
@@ -152,7 +152,6 @@ openbsd_mode[14].comment="link2 defined bit";
 openbsd_mode[15].flag=IFF_MULTICAST;
 openbsd_mode[15].comment="supports multicast";
 
-int i;
 for (i=0; i <= 15; i++){
 	if((ifr.ifr_flags & openbsd_mode[i].flag) == openbsd_mode[i].flag){
 		printf("%x %s\n", openbsd_mode[i].flag, openbsd_mode[i].comment);
