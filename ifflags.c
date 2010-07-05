@@ -79,7 +79,7 @@ main(int argc, char *argv[])
 		all_flags = "ffff";
 		mode = strtol(all_flags, NULL, 16);
 		ifr.ifr_flags = mode;
-		printf("--- network interface flags hacking tool:D ---\n");
+		printf("--- network interface flags hacking tool	:D ---\n");
 		printf("ifflags ifname [flags]\n");
 		printf("flags values in hexa:\n\n");
 		Decode_flags();
@@ -137,7 +137,7 @@ Decode_flags()
 		int             flag;
 		char           *comment;
 	};
-	struct if_mode *openbsd_mode = NULL;
+	struct if_mode *openbsd_mode;
 
 	openbsd_mode[0].flag = IFF_UP;
 	openbsd_mode[0].comment = "interface is up";
@@ -172,8 +172,8 @@ Decode_flags()
 	openbsd_mode[15].flag = IFF_MULTICAST;
 	openbsd_mode[15].comment = "supports multicast";
 
-	table_length = sizeof(openbsd_mode);
-	for (i = 0; i <= table_length; i++) {
+	table_length = sizeof(*openbsd_mode);
+	for (i = 0; i < table_length; i++) {
 		if ((ifr.ifr_flags & openbsd_mode[i].flag) == openbsd_mode[i].flag) {
 			printf("%x %s\n", openbsd_mode[i].flag, openbsd_mode[i].comment);
 		}
