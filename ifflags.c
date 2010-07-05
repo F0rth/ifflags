@@ -131,11 +131,13 @@ Set_mode()
 int
 Decode_flags()
 {
-	int             i;
+	short           i;
+	short           table_length;
 	struct if_mode {
-		int         flag;
-		char       *comment;
-	}               openbsd_mode[16];
+		int             flag;
+		char           *comment;
+	};
+	struct if_mode *openbsd_mode = NULL;
 
 	openbsd_mode[0].flag = IFF_UP;
 	openbsd_mode[0].comment = "interface is up";
@@ -170,7 +172,8 @@ Decode_flags()
 	openbsd_mode[15].flag = IFF_MULTICAST;
 	openbsd_mode[15].comment = "supports multicast";
 
-	for (i = 0; i <= 15; i++) {
+	table_length = sizeof(openbsd_mode);
+	for (i = 0; i <= table_length; i++) {
 		if ((ifr.ifr_flags & openbsd_mode[i].flag) == openbsd_mode[i].flag) {
 			printf("%x %s\n", openbsd_mode[i].flag, openbsd_mode[i].comment);
 		}
