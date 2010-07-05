@@ -1,7 +1,7 @@
 PROG=	ifflags
 
-CFLAGS+=	-Wall -ansi -pedantic	\
+CFLAGS+=	-g -Wall -ansi -pedantic	\
 		-Wall -Wmissing-prototypes \
-		-Wstrict-prototypes -Werror
+		-Wstrict-prototypes
 
 .include <bsd.prog.mk>
