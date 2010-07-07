@@ -8,7 +8,7 @@
 #include <string.h>
 #include <limits.h>
 #include <stdlib.h>
-
+#include <glib.h>
 
 /* Prototypes functions */
 int             Decode_flags(void);
