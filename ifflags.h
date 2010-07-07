@@ -10,7 +10,6 @@
 #include <stdlib.h>
 
 
-#include "strlcpy.h"
 
 /* Prototypes functions */
 int             Decode_flags(void);
