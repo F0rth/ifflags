@@ -1,10 +1,12 @@
 #include "ifflags.h"
 
-short table_length = 15;
-struct if_mode os_flags[15];
+short           table_length = 15;
+struct if_mode  os_flags[15];
 
-int Load_os_flags() {
-	
+int 
+Load_os_flags()
+{
+
 	os_flags[0].flag = IFF_UP;
 	os_flags[0].comment = "interface is up";
 	os_flags[1].flag = IFF_BROADCAST;
@@ -38,6 +40,6 @@ int Load_os_flags() {
 	os_flags[15].flag = IFF_MULTICAST;
 	os_flags[15].comment = "supports multicast";
 
-return (0);
+	return (0);
 
 }

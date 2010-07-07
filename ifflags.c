@@ -19,28 +19,16 @@ Ground Up" http://www.packetstormsecurity.org/sniffers/Sniffer_construction.txt
 by Chad Renfro <raw_sock@hotmail.com>
 */
 
-#include <stdio.h>
-#include <sys/socket.h>
-#include <sys/ioctl.h>
-#include <net/if.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <string.h>
-#include <limits.h>
-#include <stdlib.h>
+#include "ifflags.h"
 
 /* Global variables */
+
 int             sock;
 struct ifreq    ifr;
 char           *interface;
 unsigned int    mode;
 
-/* Prototypes functions */
-int             Decode_flags(void);
-int             Set_mode(void);
-int             Open_if(void);
-int             Open_Raw_Socket(void);
+
 
 /* Let's begin ! */
 
@@ -48,6 +36,8 @@ int
 main(int argc, char *argv[])
 {
 	char           *all_flags;
+	Load_os_flags();
+
 	switch (argc) {
 	case (2):
 		interface = argv[1];
@@ -132,50 +122,10 @@ int
 Decode_flags()
 {
 	short           i;
-	short           table_length;
-	struct if_mode {
-		int             flag;
-		char           *comment;
-	};
-	struct if_mode *openbsd_mode;
 
-	openbsd_mode[0].flag = IFF_UP;
-	openbsd_mode[0].comment = "interface is up";
-	openbsd_mode[1].flag = IFF_BROADCAST;
-	openbsd_mode[1].comment = "broadcast address valid";
-	openbsd_mode[2].flag = IFF_DEBUG;
-	openbsd_mode[2].comment = "turn on debugging";
-	openbsd_mode[3].flag = IFF_LOOPBACK;
-	openbsd_mode[3].comment = "is a loopback net";
-	openbsd_mode[4].flag = IFF_POINTOPOINT;
-	openbsd_mode[4].comment = "interface is point-to-point link";
-	openbsd_mode[5].flag = IFF_NOTRAILERS;
-	openbsd_mode[5].comment = "avoid use of trailers";
-	openbsd_mode[6].flag = IFF_RUNNING;
-	openbsd_mode[6].comment = "resources allocated";
-	openbsd_mode[7].flag = IFF_NOARP;
-	openbsd_mode[7].comment = "no address resolution protocol";
-	openbsd_mode[8].flag = IFF_PROMISC;
-	openbsd_mode[8].comment = "receive all packets";
-	openbsd_mode[9].flag = IFF_ALLMULTI;
-	openbsd_mode[9].comment = "receive all multicast packets";
-	openbsd_mode[10].flag = IFF_OACTIVE;
-	openbsd_mode[10].comment = "transmission in progress";
-	openbsd_mode[11].flag = IFF_SIMPLEX;
-	openbsd_mode[11].comment = "can\'t hear own transmissions";
-	openbsd_mode[12].flag = IFF_LINK0;
-	openbsd_mode[12].comment = "link0 defined bit";
-	openbsd_mode[13].flag = IFF_LINK1;
-	openbsd_mode[13].comment = "link1 defined bit";
-	openbsd_mode[14].flag = IFF_LINK2;
-	openbsd_mode[14].comment = "link2 defined bit";
-	openbsd_mode[15].flag = IFF_MULTICAST;
-	openbsd_mode[15].comment = "supports multicast";
-
-	table_length = sizeof(*openbsd_mode);
-	for (i = 0; i < table_length; i++) {
-		if ((ifr.ifr_flags & openbsd_mode[i].flag) == openbsd_mode[i].flag) {
-			printf("%x %s\n", openbsd_mode[i].flag, openbsd_mode[i].comment);
+	for (i = 0; i <= table_length; i++) {
+		if ((ifr.ifr_flags & os_flags[i].flag) == os_flags[i].flag) {
+			printf("%x %s\n", os_flags[i].flag, os_flags[i].comment);
 		}
 	}
 
