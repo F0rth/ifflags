@@ -4,7 +4,7 @@ SRCS=	ifflags.c
 .if ${OS} == OpenBSD
 SRCS+=	openbsd.c
 .elif  ${OS} == Linux
-SRCS+= linux.c
+SRCS+= linux.c strlcpy.c
 .endif
 CFLAGS+=	-g -Wall -ansi -pedantic	\
 		-Wall -Wmissing-prototypes \
